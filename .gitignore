@@ -1,0 +1,5 @@
+env
+*.7z
+*.txt
+*.log
+*.sqlite3

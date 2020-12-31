@@ -1,0 +1,45 @@
+{% load bootstrap4 %}
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Secret Santa App </title>
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            .vertical-center {
+                display: flex;
+                align-items: center;
+                min-height: 100vh;
+            }
+            video {
+                object-fit: cover;
+                width: 100vw;
+                height: 100vh;
+                position: fixed;
+                top: 0;
+                left: 0;
+                }
+                .content {
+                    position: fixed;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.5);
+                    color: #f1f1f1;
+                    width: 100%;
+                    padding: 20px;
+                    }
+        </style>
+    </head>
+    <body style="background-color: #56a0a0;">
+        <video autoplay muted loop id="myVideo">
+            
+            <source src="{% static 'name_assigner/images/video.mp4' %}" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        <div class="container-fluid content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
