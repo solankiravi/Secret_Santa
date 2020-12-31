@@ -3,3 +3,4 @@ env
 *.txt
 *.log
 *.sqlite3
+*.pyc
