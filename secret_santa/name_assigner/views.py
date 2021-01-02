@@ -1,4 +1,7 @@
 from os import name
+
+from secret_santa.secret_santa.settings import SMTP_SERVER,PORT,SENDER,SUBJECT,UPLOADED_FILE_PATH,LOG_FILE_PATH
+
 from django.http.response import JsonResponse
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
@@ -63,15 +66,12 @@ def notify_santa(child_row,current_row,message,details_dict,teamfolderpath):
         child_email=child_row['Email'].values[0:1][0],
         
         )
-    
-    smptpserver,port,sender,subject = constants.SMTP_SERVER.value,constants.PORT.value,constants.SENDER.value,constants.SUBJECT.value
-    
 
 
     teamfolderpath += '\\' +santadetails['Name'].split(' ')[0]+'.html'
     with open(teamfolderpath,'w',encoding="utf-8") as f:
         f.write(message)
-    SendEmail(smptpserver,port,sender,santadetails['Email'],subject,message)
+    SendEmail(SMTP_SERVER,PORT,SENDER,santadetails['Email'],SUBJECT,message)
     details_dict[santadetails['Name']] = child_row.index.values[0:1][0]
 
 def assign_child(team_members,child_row,current_row):
@@ -148,10 +148,11 @@ def file_upload_view(request):
             Team_Details.objects.create(name=teamname,file=my_file)
             # emailbodypath=r'D:\Ravi\secret_santa\name_assigner\static\name_assigner\email_body.html'
             emailbodypath= constants.EMAIL_BODY_PATH.value
-            filepath=constants.UPLOADED_FILE_PATH.value+'\\'+my_file.name
+            
+            filepath=UPLOADED_FILE_PATH+'\\'+my_file.name
             if not os.path.exists(filepath):
                 raise Exception("filenames should not contain any spaces")
-            teamfolderpath= constants.UPLOADED_FILE_PATH.value+'\\'+teamname
+            teamfolderpath= UPLOADED_FILE_PATH+'\\'+teamname
             
             if(not os.path.exists(teamfolderpath)):
                 os.makedirs(teamfolderpath)
@@ -160,9 +161,7 @@ def file_upload_view(request):
             os.remove(filepath)
             filepath = teamfilepath
         
-
-            logfile=constants.LOG_FILE_PATH.value
-            logging.basicConfig(filename=logfile,level=logging.DEBUG)
+            logging.basicConfig(filename=LOG_FILE_PATH,level=logging.DEBUG)
             logging.debug( teamname +" => "+ str(datetime.now()))
             details = main(filepath,emailbodypath,teamfolderpath)
             logging.debug(details)

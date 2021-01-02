@@ -129,3 +129,10 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MEDIA_ROOT=os.path.join(BASE_DIR,'')
 MEDIA_URL='/files/'
+
+LOG_FILE_PATH=os.path.join(PROJECT_ROOT, 'app.log')
+SMTP_SERVER=r''
+PORT=''
+SENDER=''
+SUBJECT=''
+UPLOADED_FILE_PATH = os.path.join(PROJECT_ROOT, 'files')
